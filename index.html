@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="redditApp">
+  <head>
+    <title>Reddit Clone</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+
+  </head>
+  <body ng-controller="RedditController">
+    <header>
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <nav class="navbar navbar-default navbar-fixed-top">
+            <h1 class="navbar-brand">Reddit Clone</h1>
+            <a href="/newPost"><p class="submit-post pull-right">
+              Submit Post
+              <span class="glyphicon glyphicon-plus"></span>
+            </p></a>
+
+            <select class="dropdown pull-right" ng-model="sort" ng-init="sort='title'">
+              <option value="title">Sort by Title</option>
+              <option value="score">Sort by Score</option>
+            </select>
+
+            <input class="pull-right" ng-model="searchPosts" type="text" placeholder="Search">
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+
+      <div ng-repeat="post in posts | orderBy: sort | filter: searchPosts">
+        <article class="well post-box">
+          <img class="post-image" ng-src="{{ post.image }}" alt="thumbnail" />
+          <div class="post-content">
+            <h4>{{ post.title }} |
+              <small>
+                <span class="glyphicon glyphicon-arrow-up" ng-click="post.upVote()">
+                </span>
+                <span class="glyphicon glyphicon-arrow-down" ng-click="post.downVote()">
+                </span>
+              </small>
+              <span class="post-votes">{{ post.score }}</span>
+            </h4>
+            <p class="post-author">By {{ post.author }}</p>
+            <div class="post-details">
+              <p class="post-date"><span class="glyphicon glyphicon-calendar"></span>{{ post.date | date }} |
+              <span class="comments glyphicon glyphicon-comment"></span> {{ post.comments }} Comments | <span class="glyphicon glyphicon-pencil"></span>Add Comment</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <footer>
+    </footer>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular.min.js"></script>
+    <script type="text/javascript" src="controllers.js"></script>
+  </body>
+</html>

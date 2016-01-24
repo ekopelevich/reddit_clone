@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="redditApp">
+  <head>
+    <title>Reddit Clone</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+
+  </head>
+  <body ng-controller="RedditController">
+    <header>
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <nav class="navbar navbar-default navbar-fixed-top">
+            <h1 class="navbar-brand">Reddit Clone</h1>
+            <p class="submit-post pull-right">Submit Post <span class="glyphicon glyphicon-plus"></span></p>
+            <div class="dropdown sort pull-right" ng-model="sort" ng-init="rating">
+              <button class="btn btn-default dropdown-toggle pull-left" type="button" data-toggle="dropdown">
+                Sort by Name
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu pull-right">
+                <li><a href="#">Sort by Name</a></li>
+                <li><a href="#">Sort by Votes</a></li>
+              </ul>
+            </div>
+
+            <input class="pull-right" ng-model="search" type="text" placeholder="Search">
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <form name="newPost" action="javascript:void(0)" ng-submit="newPostFn()">
+        <label for="title">
+          Title
+          <input type="text" name="title" ng-model="postTitle">
+        </label>
+        <label for="author">
+          Author
+          <input type="text" name="author" ng-model="postAuthor">
+        </label>
+        <label for="description">
+          Title
+          <input type="text" name="description" ng-model="postDescription">
+        </label>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </main>
+
+    <footer>
+    </footer>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular.min.js"></script>
+    <script type="text/javascript" src="controllers.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+  </body>
+</html>
