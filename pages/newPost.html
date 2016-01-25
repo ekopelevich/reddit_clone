@@ -4,7 +4,7 @@
     <title>Reddit Clone</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 
   </head>
   <body ng-controller="RedditController">
@@ -13,47 +13,46 @@
         <div class="navbar-header">
           <nav class="navbar navbar-default navbar-fixed-top">
             <h1 class="navbar-brand">Reddit Clone</h1>
-            <p class="submit-post pull-right">Submit Post <span class="glyphicon glyphicon-plus"></span></p>
-            <div class="dropdown sort pull-right" ng-model="sort" ng-init="rating">
-              <button class="btn btn-default dropdown-toggle pull-left" type="button" data-toggle="dropdown">
-                Sort by Name
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu pull-right">
-                <li><a href="#">Sort by Name</a></li>
-                <li><a href="#">Sort by Votes</a></li>
-              </ul>
-            </div>
-
-            <input class="pull-right" ng-model="search" type="text" placeholder="Search">
           </nav>
         </div>
       </div>
     </header>
 
     <main>
-      <form name="newPost" action="javascript:void(0)" ng-submit="newPostFn()">
+
+      <h1>New Post</h1>
+      <form name="newPostForm" ng-submit="newPost()">
         <label for="title">
           Title
-          <input type="text" name="title" ng-model="postTitle">
+          <input class="form-control" type="text" name="title" ng-model="title">
         </label>
         <label for="author">
           Author
-          <input type="text" name="author" ng-model="postAuthor">
+          <input class="form-control" type="text" name="author" ng-model="author">
         </label>
         <label for="description">
-          Title
-          <input type="text" name="description" ng-model="postDescription">
+          Description
+          <textarea class="form-control" type="text" name="description" ng-model="description"></textarea>
         </label>
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <label for="image">
+          Image
+          <input class="form-control" type="text" name="image" placeholder="Enter a link to an image" ng-model="image">
+        </label>
+        <button class="btn btn-primary" type="submit" name="submit">Submit</button>
       </form>
+      <div class="preview-post">
+        <h2>Preview Post</h2>
+        <h3>{{ title }}</h3>
+        <p>{{ author }}</p>
+        <p>{{ description }}</p>
+        <img class="preview-image" ng-src="{{ image || 'http://media.mydogspace.com.s3.amazonaws.com/wp-content/uploads/2013/08/puppy-500x350.jpg' }}" alt="image" />
+      </div>
     </main>
 
     <footer>
     </footer>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular.min.js"></script>
-    <script type="text/javascript" src="controllers.js"></script>
-    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="../controllers.js"></script>
   </body>
 </html>

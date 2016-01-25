@@ -5,7 +5,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
   </head>
   <body ng-controller="RedditController">
     <header>
@@ -13,17 +13,21 @@
         <div class="navbar-header">
           <nav class="navbar navbar-default navbar-fixed-top">
             <h1 class="navbar-brand">Reddit Clone</h1>
-            <a href="/newPost"><p class="submit-post pull-right">
-              Submit Post
-              <span class="glyphicon glyphicon-plus"></span>
-            </p></a>
 
-            <select class="dropdown pull-right" ng-model="sort" ng-init="sort='title'">
+            <a href="/pages/newPost">
+              <p class="new-post">
+                Submit Post
+                <span class="glyphicon glyphicon-plus"></span>
+              </p>
+            </a>
+
+            <select class="dropdown" ng-model="sort" ng-init="sort='-score'">
               <option value="title">Sort by Title</option>
-              <option value="score">Sort by Score</option>
+              <option value="-score">Sort by Score (High to Low)</option>
+              <option value="score">Sort by Score (Low to High)</option>
             </select>
 
-            <input class="pull-right" ng-model="searchPosts" type="text" placeholder="Search">
+            <input class="search-box form-control" ng-model="search" type="text" placeholder="Search">
           </nav>
         </div>
       </div>
@@ -31,7 +35,7 @@
 
     <main>
 
-      <div ng-repeat="post in posts | orderBy: sort | filter: searchPosts">
+      <div ng-repeat="post in posts | orderBy: sort | filter: search">
         <article class="well post-box">
           <img class="post-image" ng-src="{{ post.image }}" alt="thumbnail" />
           <div class="post-content">
@@ -47,7 +51,10 @@
             <p class="post-author">By {{ post.author }}</p>
             <div class="post-details">
               <p class="post-date"><span class="glyphicon glyphicon-calendar"></span>{{ post.date | date }} |
-              <span class="comments glyphicon glyphicon-comment"></span> {{ post.comments }} Comments | <span class="glyphicon glyphicon-pencil"></span>Add Comment</p>
+              <a href="/comments">
+              <span class="comments glyphicon glyphicon-comment"></span> {{ post.comments }} Comments
+              </a> |
+              <span class="glyphicon glyphicon-pencil"></span>Add Comment</p>
             </div>
           </div>
         </article>
