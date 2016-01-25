@@ -4,13 +4,10 @@ app.controller('RedditController', function($scope, $http){
 
   $scope.posts = [];
 
-  function Post(author, title, date, description, image, score, comments) {
-    this.author = author;
-    this.title = title;
+  function Comment(commentAuthor, commentBody, date, score) {
+    this.commentAuthor = commentAuthor;
+    this.commentBody = commentBody;
     this.date = date;
-    this.description = description;
-    this.image = image;
-    this.comments = comments;
     this.score = score;
     this.upVote = function(){
       this.score++;
@@ -20,11 +17,30 @@ app.controller('RedditController', function($scope, $http){
     };
   }
 
-  function Comment() {
-    votes = this.votes;
-    author = this.author;
-    description = this.description;
-    date = this.date;
+  function Post(author, title, description, date, image, score, commentsNum) {
+    this.author = author;
+    this.title = title;
+    this.description = description;
+    this.date = date;
+    this.image = image;
+    this.comments = [];
+    this.score = score;
+    this.comments_num = commentsNum;
+    this.upVote = function(){
+      this.score++;
+    };
+    this.downVote = function(){
+      this.score--;
+    };
+
+    this.viewComments = function(){
+      console.log(this.comments);
+    };
+
+    this.newComment = function(commentAuthor, commentBody){
+      var comment = new Comment(commentAuthor, commentBody, Date.now(), 0);
+      this.comments.push(comment);
+    };
   }
 
   var response = $http.get('https://www.reddit.com/r/earthporn.json')
@@ -38,10 +54,7 @@ app.controller('RedditController', function($scope, $http){
 
 
       for (var i = 0; i < listings.length; i++) {
-        post = new Post(listings[i].data.author, listings[i].data.title,  listings[i].data.created_utc, 'description', listings[i].data.thumbnail, listings[i].data.score, listings[i].data.num_comments);
-
-        console.log(listings[i].data.created_utc);
-        console.log(post.date);
+        post = new Post(listings[i].data.author, listings[i].data.title, 'description', listings[i].data.created_utc, listings[i].data.thumbnail, listings[i].data.score, listings[i].data.num_comments);
 
         $scope.posts.push(post);
         localStorage.setItem('posts', JSON.stringify($scope.posts));
@@ -51,12 +64,8 @@ app.controller('RedditController', function($scope, $http){
     });
 
   $scope.newPost = function(){
-    var post = new Post(newPostForm.author.value, newPostForm.title.value, Date.now(), newPostForm.description.value, newPostForm.image.value, 0, 0);
+    var post = new Post(newPostForm.author.value, newPostForm.title.value, newPostForm.description.value, Date.now(), newPostForm.image.value, 0, 0);
     $scope.posts.push(post);
-  };
-
-  $scope.viewComments = function(){
-
   };
 
 });

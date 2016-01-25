@@ -28,6 +28,10 @@ main {
   margin-right: 40px;
 }
 
+.new-post {
+  cursor: pointer;
+}
+
 .search-box {
   width: 150px;
 }
@@ -95,13 +99,30 @@ h1, form {
   align-items: flex-start;
 }
 
-.preview-post {
-  border: 1px solid black;
-  align-self: flex-start;
-  margin: 20px;
-  padding: 20px;
+.post-description {
+  margin: 30px;
+  width: 1000px;
 }
 
-.preview-image {
-  width: 300px;
+.comments-display {
+  margin-left: 60px;
+}
+
+.view-alignment {
+  width: 500px;
+  margin-left: 40px;
+}
+
+.comments-link {
+  cursor: pointer;
+}
+
+.comment-author {
+  font-style: italic;
+  color: #210071;
+}
+
+.error-text {
+  font-style: italic;
+  color: #ff0000;
 }
