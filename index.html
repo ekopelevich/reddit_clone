@@ -5,7 +5,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
+
   </head>
   <body ng-controller="RedditController">
     <header>
@@ -14,12 +14,10 @@
           <nav class="navbar navbar-default navbar-fixed-top">
             <h1 class="navbar-brand">Reddit Clone</h1>
 
-            <a href="/pages/newPost">
-              <p class="new-post">
+              <p class="new-post" ng-click="addPost = !addPost">
                 Submit Post
                 <span class="glyphicon glyphicon-plus"></span>
               </p>
-            </a>
 
             <select class="dropdown" ng-model="sort" ng-init="sort='-score'">
               <option value="title">Sort by Title</option>
@@ -34,10 +32,40 @@
     </header>
 
     <main>
+      <div ng-show="addPost">
+        <h1>New Post</h1>
+        <form name="newPostForm" ng-submit="newPost()">
+          <label for="title">
+            Title
+            <input class="form-control" type="text" name="title" ng-model="title">
+          </label>
+          <label for="author">
+            Author
+            <input class="form-control" type="text" name="author" ng-model="author">
+          </label>
+          <label for="description">
+            Description
+            <textarea class="form-control" type="text" name="description" ng-model="description"></textarea>
+          </label>
+          <label for="image">
+            Image
+            <input class="form-control" type="text" name="image" placeholder="Enter a link to an image" ng-model="image">
+          </label>
+          <a href="/"><button ng-click="addPost = !addPost" class="btn btn-primary" type="submit" name="submit">Submit</button></a>
+        </form>
+      </div>
+
+      <div ng-show="postComments">
+        <p>Comment Author</p>
+        <p>Comment Date</p>
+        <p>Comment Description</p>
+      </div>
 
       <div ng-repeat="post in posts | orderBy: sort | filter: search">
         <article class="well post-box">
-          <img class="post-image" ng-src="{{ post.image }}" alt="thumbnail" />
+          <div class="post-image">
+            <img ng-src="{{ post.image }}" alt="thumbnail" />
+          </div>
           <div class="post-content">
             <h4>{{ post.title }} |
               <small>
@@ -50,21 +78,22 @@
             </h4>
             <p class="post-author">By {{ post.author }}</p>
             <div class="post-details">
-              <p class="post-date"><span class="glyphicon glyphicon-calendar"></span>{{ post.date | date }} |
-              <a href="/comments">
-              <span class="comments glyphicon glyphicon-comment"></span> {{ post.comments }} Comments
-              </a> |
+              <p class="post-date"><span class="glyphicon glyphicon-calendar"></span>
+                <span> {{ post.date | amCalendar }} |</span>
+              <span ng-click="postComments = !postComments" class="comments glyphicon glyphicon-comment"></span> {{ post.comments }} Comments |
               <span class="glyphicon glyphicon-pencil"></span>Add Comment</p>
             </div>
           </div>
+
         </article>
       </div>
     </main>
 
     <footer>
     </footer>
-
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.3/angular-moment.min.js"></script>
     <script type="text/javascript" src="controllers.js"></script>
   </body>
 </html>

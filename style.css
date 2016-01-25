@@ -77,6 +77,16 @@ main {
   color: green;
 }
 
+.post-image {
+  width: auto;
+  display: inline-block;
+}
+
+.post-image img {
+  width: 140px;
+  height: auto;
+}
+
 h1, form {
   margin: 20px;
   align-self: flex-start;
