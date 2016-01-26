@@ -35,27 +35,29 @@
       <div class="view-alignment" ng-show="addPost">
         <h1>New Post</h1>
         <form name="newPostForm" ng-submit="newPost()" novalidate>
+
           <label for="author">
             Author
-            <input class="form-control" type="text" name="author" ng-model="author" ng-minlength="3"  required>
-            <!-- ng-class="{'has-error: newPostForm.author.$error.minlength'}" -->
-            <!-- <p class="error-text" ng-show="newPostForm.author.$error.minlength">Author must be at least 3 characters long.</p> -->
+            <input class="form-control" type="text" name="author" ng-model="author" ng-minlength="3" required>
           </label>
+          <p class="error-text" ng-show="newPostForm.author.$error.minlength">Author must be at least 3 characters long.</p>
+
           <label for="title">
             Title
-            <input class="form-control" type="text" name="title" ng-model="title" ng-minlength="3"  required >
-            <!-- ng-class="{'has-error: newPostForm.title.$error.minlength'}" -->
-            <!-- <p class="error-text" ng-show="newPostForm.author.$error.minlength">Title must be at least 3 characters long.</p> -->
+            <input class="form-control" type="text" name="title" ng-model="title" ng-minlength="3" required>
           </label>
+          <p class="error-text" ng-show="newPostForm.title.$error.minlength">Title must be at least 3 characters long.</p>
+
           <label for="description">
             Description
-            <textarea class="form-control" cols="50" rows="10" name="description" ng-model="description" required></textarea>
+            <textarea class="form-control" cols="50" rows="10" name="description" ng-model="description" ng-minlength="20" required></textarea>
           </label>
+          <p class="error-text" ng-show="newPostForm.description.$error.minlength">Description must be at least 20 characters long.</p>
           <label for="image">
             Image
             <input class="form-control" type="text" name="image" placeholder="Enter a link to an image" ng-model="image" required>
           </label>
-          <a href="/"><button ng-click="addPost = !addPost" class="btn btn-primary" type="submit" name="submit">Submit</button></a>
+          <button ng-disabled="newPostForm.$invalid" ng-click="addPost = !addPost" class="btn btn-primary" type="submit" name="submit">Submit</button>
         </form>
       </div>
 
@@ -65,14 +67,14 @@
             <img ng-src="{{ post.image }}" alt="thumbnail" />
           </div>
           <div class="post-content">
-            <h4>{{ post.title }} |
+            <h4 class="post-title">{{ post.title }} |
               <small>
                 <span class="glyphicon glyphicon-arrow-up" ng-click="post.upVote()">
                 </span>
                 <span class="glyphicon glyphicon-arrow-down" ng-click="post.downVote()">
                 </span>
               </small>
-              <span class="post-votes">{{ post.score }}</span>
+              <span class="post-score">{{ post.score }}</span>
             </h4>
             <p class="post-author">By {{ post.author }}</p>
             <div class="post-details">
@@ -117,14 +119,17 @@
           <form name="newCommentForm" ng-submit="post.newComment(commentAuthor, commentBody)">
             <label for="commentAuthor">
               Author
-              <input class="form-control" type="text" name="commentAuthor" ng-model="commentAuthor" required>
-              <p class="error-text" >Author name must be at least 3 characters long.</p>
+              <input class="form-control" type="text" name="commentAuthor" ng-model="commentAuthor" ng-minlength="3" required>
             </label>
+            <p class="error-text" ng-show="newCommentForm.commentAuthor.$error.minlength">Author must be at least 3 characters long.</p>
+
             <label for="commentBody">
               Comment
-              <textarea class="form-control" cols="50" rows="10" name="commentBody" ng-model="commentBody" required></textarea>
+              <textarea class="form-control" cols="50" rows="10" name="commentBody" ng-model="commentBody" ng-minlength="20" required></textarea>
             </label>
-            <a href="/"><button ng-click="addComment = !addComment" class="btn btn-primary" type="submit" name="submit">Submit</button></a>
+            <p class="error-text" ng-show="newCommentForm.commentBody.$error.minlength">Comment must be at least 20 characters long.</p>
+
+            <button ng-click="addComment = !addComment" ng-disabled="newCommentForm.$invalid" class="btn btn-primary" type="submit" name="submit">Submit</button>
           </form>
         </div>
       </div>
@@ -135,6 +140,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.4/angular.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/1.0.0-beta.3/angular-moment.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
     <script type="text/javascript" src="controllers.js"></script>
   </body>
 </html>

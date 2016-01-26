@@ -1,4 +1,4 @@
-var app = angular.module('redditApp', ['angularMoment']);
+var app = angular.module('redditApp', ['angularMoment', 'ngMessages']);
 
 app.controller('RedditController', function($scope, $http){
 
@@ -45,13 +45,11 @@ app.controller('RedditController', function($scope, $http){
 
   var response = $http.get('https://www.reddit.com/r/earthporn.json')
     .then(function successCallback(response){
-      console.log(response);
 
       $scope.posts = [];
 
       var listings = response.data.data.children;
       var post;
-
 
       for (var i = 0; i < listings.length; i++) {
         post = new Post(listings[i].data.author, listings[i].data.title, 'description', listings[i].data.created_utc, listings[i].data.thumbnail, listings[i].data.score, listings[i].data.num_comments);
@@ -60,12 +58,15 @@ app.controller('RedditController', function($scope, $http){
         localStorage.setItem('posts', JSON.stringify($scope.posts));
       }
     }, function errorCallback(response) {
-      console.log(response, error);
+      console.error(response);
     });
 
   $scope.newPost = function(){
-    var post = new Post(newPostForm.author.value, newPostForm.title.value, newPostForm.description.value, Date.now(), newPostForm.image.value, 0, 0);
+    console.log('valid!');
+    var post = new Post($scope.author, $scope.title, $scope.description, Date.now(), $scope.image, 0, 0);
     $scope.posts.push(post);
-  };
+    console.log($scope.newPostForm);
+    $scope.newPostForm = {};
 
+  };
 });
