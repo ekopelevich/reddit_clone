@@ -134,3 +134,21 @@ h1, form {
   font-style: italic;
   color: #ff0000;
 }
+
+/* Animations */
+
+.ng-enter {
+  animation: fadeInRight 1.5s;
+}
+
+.ng-leave {
+  animation: fadeOutRight 1.5s;
+}
+
+form.ng-enter {
+  animation: fadeInLeft 1.5s;
+}
+
+form.ng-leave {
+  animation: fadeOutLeft 1.5s;
+}

@@ -1,4 +1,4 @@
-var app = angular.module('redditApp', ['angularMoment', 'ngMessages']);
+var app = angular.module('redditApp', ['angularMoment', 'ngAnimate']);
 
 app.controller('RedditController', function($scope, $http){
 
@@ -38,7 +38,7 @@ app.controller('RedditController', function($scope, $http){
     };
 
     this.newComment = function(commentAuthor, commentBody){
-      var comment = new Comment(commentAuthor, commentBody, Date.now(), 0);
+      var comment = new Comment(commentAuthor, commentBody, Date.now()/1000, 0);
       this.comments.push(comment);
     };
   }
@@ -63,10 +63,9 @@ app.controller('RedditController', function($scope, $http){
 
   $scope.newPost = function(){
     console.log('valid!');
-    var post = new Post($scope.author, $scope.title, $scope.description, Date.now(), $scope.image, 0, 0);
+    var post = new Post($scope.author, $scope.title, $scope.description, Date.now()/1000, $scope.image, 0, 0);
     $scope.posts.push(post);
     console.log($scope.newPostForm);
-    $scope.newPostForm = {};
-
+    $scope.newPostForm.resetForm();
   };
 });
